@@ -40,6 +40,12 @@ class uatg_cache_dcache_fill(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
+
+        asm_data = '\nrvtest_data:\n'
+
+        for i in range (self._block_size * self._sets * self._ways):
+            asm_data += ".word {0:08x}\n".format(random.randrange(16**8))
+
     	asm_main = "fence\n\tli t0, 69\n\tli t3, {0}\n\tla t2, rvtest_data\n".format(self._sets * self._ways)
     	asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, lab2\n\taddi t4, t4, 1\n\tj lab1\n".format(self._word_size * self._block_size)
     	asm_nop = "asm_nop:\n"
@@ -47,7 +53,7 @@ class uatg_cache_dcache_fill(IPlugin):
             asm_nop += "\tnop\n"
         asm_sw = "asm_sw:\n"
         for i in range(self._fb_size * 2):
-            asm_sw = "\tsw t0, 0({0})\n".format(8000 + 32 * (i + 1))        #**************How to ensure the new address is a miss************
+            asm_sw = "\tsw t0, {0}(t2)\n".format(32 * (i + 1))
     	asm_end = "end:\n\tnop"
     	
 	    asm = asm_main + asm_lab1 + asm_nop + asm_sw + asm_end
