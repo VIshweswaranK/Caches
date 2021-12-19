@@ -19,5 +19,5 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ```
 
 ## Contributors
-Vishweshwaran K <<vishwa.kans07@gmail.com>>
+Vishweshwaran K <<vishwa.kans07@gmail.com>>,
 Karthik B K <<bkkarthik@pesu.pes.edu>>
