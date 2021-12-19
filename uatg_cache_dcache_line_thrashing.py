@@ -39,15 +39,20 @@ class uatg_cache_dcache_fill(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
-    	asm_main = "fence\n\tcsrr x30, mhpmcounter22\n\tli t0, 69\n\tli t3, {0}\n\tli t1, {1}\n\tli t5, {2}\n".format(self._sets * self._ways - 1, self._sets * self._ways + self_fb_size, self._ways)
-    	asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, lab2\n\taddi t4, t4, 1\n\tj lab1\n".format(self._sets * self._ways)
-    	asm_lab2 = "lab2:\n\tli t2, 0\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t1, reinit\n\taddi t4, t4, 1\n\tj lab2\n".format(self._sets * self._ways)
-    	asm_reinit = "reinit:\n\tli a1, {0}\n\tli t2, 0\n\tj lab3\n".format(self._sets * self._word_size * self._block_size)
-    	asm_lab3 = "lab3:\n\taddi t0, t0, 1\n\tsw t0, 0(t2)\n\tbeq t4, a1, reinit2\n\taddi t4, t4, 1\n\tj lab3\n"
-    	asm_reinit2 = "reinit2:\n\tli t4, 1\n\tbeq t6, t3, end\n\taddi t2, t2, {0}\n\taddi t6, t6, 1\n\tj lab3\n".format(self._sets * self._ways)
-    	asm_end = "end:\n\tcsrr x31, mhpmcounter22\n\tnop"
+
+        asm_main = "fence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {1}\n\tla t2, rvtest_data\n".format(self._ways * self._sets)
+    	asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\tblt t4, t5, lab1\n".format(self._block_size * self._block_size)
+    	asm_lab2 = "lab2:\n\tmv t4, x0\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\taddi t1, t1, 1\n\tblt t1, t3, lab1\n".format(self._block_size * self._word_size)
+    	asm_nop = "asm_nop:\n"
+        for i in range(self._fb_size * 2):
+            asm_nop += "\tnop\n"
     	
-	asm = asm_main + asm_lab1 + asm_lab2 + asm_reinit + asm_lab3 + asm_reinit2 + asm_end
+        asm_lt = "asm_lt:\n"
+        for i in range(self._ways * self._sets * 2):
+            asm_lt += "\tsw t0, {0}(t2)\n".format(64 * (i + 1))
+
+        asm_end = "\nend:\n\tnop\n"
+	    asm = asm_main + asm_lab1 + asm_lab2 + asm_nop + asm_lt + asm_end
         compile_macros = []    	
     	
     	return [{
