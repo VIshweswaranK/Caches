@@ -78,6 +78,19 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - Once the cache is full, we perform numerous `consecutive load operations`.
 - The number of iterations is parameterized based on the YAML input such that the fill_buffer is completely full.
 - Post filling the caches, we perform a series of `nop` instructions to ensure that the fill buffer is empty.
+#### dcache_line_thrashing.py
+- Perform a  `fence`  operation to clear out the data cache subsystem and the fill buffer.
+- First the cache is filled up using the following logic. For an *n-way* cache system, in each set there is *only 1 non dirty way* and the remaining *n-1 ways are dirty*.
+- Now a series of `nop` operations are done inorder the ensure that the fillbuffer is empty and the cache is completely full.
+- This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the line thrashing process begins.
+- Now after the fill buffer is full, with each store operation a cache miss is encountered and the non-dirty line in the set will be replaced.
+- This process is iterated to test each cache line
+#### dcache_set_thrashing.py
+- Perform a  `fence`  operation to clear out the data cache subsystem and the fill buffer.
+- First the cache is filled up using the following logic. All the ways of a set should either be  *dirty or clean*. 
+- This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the line thrashing process begins.
+- Now after the fill buffer is full, with each store operation a cache miss is encountered and the non-dirty line in the set will be replaced.
+- This process is iterated to test each cache line
 ## Initializing test data
 - Initialise `rvtest_data` with some random values as follows:
      For the size of `(block_size * sets * ways)`, we do the following:
