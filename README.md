@@ -21,3 +21,31 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ## Contributors
 Vishweshwaran K <<vishwa.kans07@gmail.com>>,
 Karthik B K <<bkkarthik@pesu.pes.edu>>
+
+## Code Description
+
+#### dcache_fill_01.py
+- Perform a `fence` operation to clear out the data cache subsystem and the fill buffer. 
+- Load some data into a temporary register and perform `numerous store operations` to fill up the cache.
+- Each loop in ASM has an unconditional `jump` back to that label, a branch takes us out of the loop.
+- Each iteration, we visit the next `set`.
+- The total number of iterations is parameterized based on YAML input.
+#### dcache_fill_02.py
+- Perform a `fence` operation to clear out the data cache subsystem and the fill buffer. 
+- In each iteration, we visit the next way in the same set. Once all the ways in a set are touched, we visit the next set.
+- The total number of iterations is parameterized based on YAML input.
+#### dcache_fill_03.py
+-  Perform a `fence` operation to clear out the data cache subsystem and the fill buffer. 
+- Perform `numerous load operations` to fill up the cache
+- In each iteration, we visit the next way in the same set. Once all the ways in a set are touched, we visit the next set.
+- The total number of iterations is parameterized based on YAML input.
+#### dcache_fill_04.py
+- Perform a `fence` operation to clear out the data cache subsystem and the fill buffer. 
+- Load some data into a temporary register and perform `numerous load operations` to fill up the cache.
+- Each loop in ASM has an unconditional `jump` back to that label, a branch takes us out of the loop.
+- Each iteration, we visit the next `set`.
+- The total number of iterations is parameterized based on YAML input.
+## Initialising test data
+- Initialise `rvtest_data` with some random values as follows:
+     ```for  i  in  range (self._block_size  *  self._sets  *  self._ways):
+    	    asm_data +=  "\t.word 0x{0:08x}\n".format(random.randrange(16**8))```
