@@ -4,6 +4,7 @@ import uatg.regex_formats as rf
 from typing import Dict, Union, Any, List
 import re
 import os
+import random
 
 class uatg_cache_dcache_fill(IPlugin):
     def __init__(self):
@@ -52,6 +53,7 @@ class uatg_cache_dcache_fill(IPlugin):
 
         return [{
             'asm_code': asm,
+            'asm_data': asm_data,
             'asm_sig': '',
             'compile_macros': compile_macros
         }]

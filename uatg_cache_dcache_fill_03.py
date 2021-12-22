@@ -48,11 +48,12 @@ class uatg_cache_dcache_fill(IPlugin):
     	asm_lab1 = "lab1:\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t4, t4, 1\n\tblt t4, t5, lab1\n\tli t2,0\n\tadd t2, t2, t6\n\taddi t6, t6, {1}\n\taddi a1, a1, 1\n\tblt a1, t6, end\n\tj lab1\n".format(self._sets * self._word_size *, self._block_size)
     	asm_end = "end:\n\tnop"
         
-        asm = asm_data + asm_main + asm_lab1 + asm_end
+        asm = asm_main + asm_lab1 + asm_end
         compile_macros = []
 
         return [{
             'asm_code': asm,
+            'asm_data': asm_data,
             'asm_sig': '',
             'compile_macros': compile_macros
         }]
