@@ -45,7 +45,7 @@ Karthik B K <<bkkarthik@pesu.pes.edu>>
 - Each loop in ASM has an unconditional `jump` back to that label, a branch takes us out of the loop.
 - Each iteration, we visit the next `set`.
 - The total number of iterations is parameterized based on YAML input.
-## Initialising test data
+## Initializing test data
 - Initialise `rvtest_data` with some random values as follows:
-     ```for  i  in  range (self._block_size  *  self._sets  *  self._ways):
-    	    asm_data +=  "\t.word 0x{0:08x}\n".format(random.randrange(16**8))```
+     `for  i  in  range (self._block_size  *  self._sets  *  self._ways):`
+    `asm_data +=  "\t.word 0x{0:08x}\n".format(random.randrange(16**8)`
