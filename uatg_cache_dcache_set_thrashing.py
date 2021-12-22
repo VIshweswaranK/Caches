@@ -4,6 +4,7 @@ import uatg.regex_formats as rf
 from typing import Dict, Union, Any, List
 import re
 import os
+import random
 
 class uatg_cache_dcache_fill(IPlugin):
     def _init_(self):
@@ -39,20 +40,28 @@ class uatg_cache_dcache_fill(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
-    	asm_main = "\tfence\n\tcsrr x30, mhpmcounter22\n\tli t0, 69\n\tli t3, {0}\n\tli t1, {1}\n\tli t5, {2}\n\tli a2, {3}\n".format((self._sets * self._ways)-1, (self._sets * self._ways)+10, self._fb_size, self._sets)
-    	asm_lab1 = "lab1:\n\tsw t0, 0(x7)/n/taddi t2, t2, {0}/n/tbeq t4, t3, lab2/n/taddi t4, t4, 1/n/tj lab1\n".format(self._block_size * self._word_size)
-	    asm_lab2 = "lab2:\n\tli t2, 0\n\tsw t0, 0(x7)\n\taddi t2, t2, {0}}\n\tbeq t4, t1, reinit\n\taddi t4, t4, 1\n\tj lab2\n".format(self._block_size * self._word_size)
-        asm_reinit = "reinit:\n\tli a1, {0}\n\tj lab3\n".format(self._block_size * self._word_size * self._sets)
-        asm_lab3 = "lab3:\n\taddi t0, t0, 1\n\taddi t2, t2, {0}\n\tsw t0, 0(x7)\n\tbeq t4, a1, reinit2\n\taddi t4, t4, 1\n\tj lab3\n".format(self._block_size * self._word_size * self._sets)
-        asm_reinit2 = "reinit2:\n\tli t4, 1\n\tbeq t6, a2, end\n\taddi t2, t2, {0}\n\taddi t6, t6, 1\n\tj lab3".format(self._block_size * self._word_size)
-    	asm_end = "end:\n\tcsrr x31, mhpmcounter22\n\tnop"
-        
-    	
-	    asm = asm_main + asm_lab1 + asm_lab2 + asm_reinit + asm_lab3 + asm_reinit2 + asm_end
+
+        asm_data = '\nrvtest_data:\n'
+
+        for i in range (self._block_size * self._sets * self._ways):
+            asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
+
+    	asm_main = "\n\tfence\n\t\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
+        asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
+        asm_nop = "nop:\n\tmv t4, x0\n"
+        for i in range(self._fb_size * 2):
+            asm_nop += "\tnop\n"
+
+        asm_st = "asm_st:\n"
+        for i in range(100)
+            asm_st += "\tlw, {0}(t2)".format(i*(self._word_size*self._block_size*self._sets))
+        asm_end = "\nend:\n\tnop\n"
+	    asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end
         compile_macros = []    	
     	
     	return [{
             'asm_code': asm,
+            'asm_data': asm_data,
             'asm_sig': '',
             'compile_macros': compile_macros
         }]
