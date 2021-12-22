@@ -47,5 +47,5 @@ Karthik B K <<bkkarthik@pesu.pes.edu>>
 - The total number of iterations is parameterized based on YAML input.
 ## Initializing test data
 - Initialise `rvtest_data` with some random values as follows:
-     `for  i  in  range (self._block_size  *  self._sets  *  self._ways):`
+     For the size of `(block_size * sets * ways)`, we do the following:
     `asm_data +=  "\t.word 0x{0:08x}\n".format(random.randrange(16**8)`
