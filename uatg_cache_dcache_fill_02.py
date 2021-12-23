@@ -41,7 +41,7 @@ class uatg_cache_dcache_fill(IPlugin):
 
         asm_data = '\nrvtest_data:\n'
 
-        for i in range (self._block_size * self._sets * self._ways):
+        for i in range (self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
         
     	asm_main = "\tfence\n\tli, t0, 69\n\li, t1, {0}\n\tli, t5, {1}\n\tli, t6, {2}\n\tla t2, rvtest_data\n".format(self._sets, self._ways, self._sets * self._ways)
