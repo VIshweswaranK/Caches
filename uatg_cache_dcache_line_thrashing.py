@@ -57,7 +57,7 @@ class uatg_cache_dcache_fill(IPlugin):
         for i in range(self._ways * self._sets * 2):
             asm_lt += "\tsw t0, {0}(t2)\n".format(64 * (i + 1))
 
-        asm_end = "\nend:\n\tnop\n"
+        asm_end = "\nend:\n\tnop\n\tfence.i\n"
 	    asm = asm_main + asm_lab1 + asm_lab2 + asm_nop + asm_lt + asm_end
         compile_macros = []    	
     	

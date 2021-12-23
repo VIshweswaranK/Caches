@@ -52,7 +52,7 @@ class uatg_cache_dcache_fill(IPlugin):
         asm_pass10 = "pass10:\n\tli a2, 0x9999\n\tlh s1, (word_size*block_size*4+(16*x))(t1)\n\tadd s6, s6, s1\n\tslli ,s6, s6, 16\n\tlb s1, (word_size*block_size*4 + 16*3)(t1)\n\tadd s6, s6, s1\n\tbne s6, a2, end\n"
         asm_pass11 = "pass11:\n\tli a2, 0x99999999\n\tlw s1, (word_size*block_size*4)(t1)\n\tadd s6, s6, s1\n\tslli s6, s6, 32\n\tlw s1, (word_size*block_size*4+32)(t1)\n\tadd s6, s6, s1\n\tbne s6, s2, end\n"
         asm_valid = "valid:\n\taddi x31, x0, 1\n"
-        asm_end = "end:\n\tnop\n"
+        asm_end = "end:\n\tnop\n\tfence.i\n"
 "
 "
         
