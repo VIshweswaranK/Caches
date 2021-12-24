@@ -40,21 +40,19 @@ class uatg_cache_dcache_fill(IPlugin):
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
     	asm_main = "li t1, 8000\n\tli t2, 11068046444225730969\n"
-        asm_pass1 = "pass1:\n\tli a2, 153	\n\tsb t2, {(wordsize*block_size*1)}(t1)\n\tlbu t3, (wordsize*block_size*1)(t1)\n\tbne a2, t3, end\n"
-        asm_pass2 = "pass2:\n\tli a2, 39321\n\tsh t2, (wordsize*block_size*2)(t1)\n\tlhu t3, (wordsize*block_size*2)(t1)\n\tbne a2, t3, end\n"
-        asm_pass3 = "pass3:\n\tli a2, 1718000025\n\tsw t2, (wordsize*block_size*3)(t1)\n\tlwu t3, (wordsize*block_size*3)(t1)\n\tbne a2, t3, end\n"
-        asm_pass4 = "pass4:\n\tli a2, 11068046444225730969\n\tsd t2, (word_size * block_size*4)(t1)\n\tld t3, (word_size * block_size*4)(t1)\n\tbne a2, t3, end\n"
-        asm_pass5 = "pass5:\n\tli a2, 18446744073709551513\n\tlb t3, (wordsize*block_size*1)(t1)\n\tbne t3, a2, end\n"
-        asm_pass6 = "pass6:\n\tli a2, 18446744073709525401\n\tlh t3, (wordsize*block_size*2)(t1)\n\tbne t3, a2, end\n"
-        asm_pass7 = "pass7:\n\tli a2, 18446744071991564697\n\tlw t3, (wordsize*block_size*3)(t1)\n\tbne t3, a2, end\n"
-        asm_pass8 = "pass8:\n\tli a2, 11068046444225730969\n\tld t3, (word_size*block_size*4)(t1)\n\tbne t3, a2, end\n"
+        asm_pass1 = "pass1:\n\tli a2, 153	\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
+        asm_pass2 = "pass2:\n\tli a2, 39321\n\tsh t2, {0}(t1)\n\tlhu t3, {0}}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
+        asm_pass3 = "pass3:\n\tli a2, 1718000025\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
+        asm_pass4 = "pass4:\n\tli a2, 11068046444225730969\n\tsd t2, {0}(t1)\n\tld t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 4)
+        asm_pass5 = "pass5:\n\tli a2, 18446744073709551513\n\tlb t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 1)
+        asm_pass6 = "pass6:\n\tli a2, 18446744073709525401\n\tlh t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 2)
+        asm_pass7 = "pass7:\n\tli a2, 18446744071991564697\n\tlw t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 3)
+        asm_pass8 = "pass8:\n\tli a2, 11068046444225730969\n\tld t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 4)
         asm_pass9 = "pass9:\n\tli a2, 0x99\n\tlb s1, (word_size*block_size*4+(8*x))(t1)\n\tadd s6, s6, s1\n\tslli ,s6, s6, 8\n\tlb s1, (word_size*block_size*4 + 8*8)(t1)\n\tadd s6, s6, s1\n\tbne s6, a2, end\n"
         asm_pass10 = "pass10:\n\tli a2, 0x9999\n\tlh s1, (word_size*block_size*4+(16*x))(t1)\n\tadd s6, s6, s1\n\tslli ,s6, s6, 16\n\tlb s1, (word_size*block_size*4 + 16*3)(t1)\n\tadd s6, s6, s1\n\tbne s6, a2, end\n"
         asm_pass11 = "pass11:\n\tli a2, 0x99999999\n\tlw s1, (word_size*block_size*4)(t1)\n\tadd s6, s6, s1\n\tslli s6, s6, 32\n\tlw s1, (word_size*block_size*4+32)(t1)\n\tadd s6, s6, s1\n\tbne s6, s2, end\n"
         asm_valid = "valid:\n\taddi x31, x0, 1\n"
         asm_end = "end:\n\tnop\n\tfence.i\n"
-"
-"
         
 
 	    asm = asm_main + asm_pass1 + asm_pass2 + asm_pass3 + asm_pass4 + asm_pass5 + asm_pass6 + asm_pass7 + asm_pass8 + asm_pass9 + asm_pass10 + asm_pass11 + asm_valid + asm_end
