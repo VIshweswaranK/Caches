@@ -39,15 +39,15 @@ class uatg_cache_dcache_fill(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
-    	asm_main = "li t1, 8000\n\tli t2, 11068046444225730969\n"
-        asm_pass1 = "pass1:\n\tli a2, 153\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
-        asm_pass2 = "pass2:\n\tli a2, 39321\n\tsh t2, {0}(t1)\n\tlhu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
-        asm_pass3 = "pass3:\n\tli a2, 1718000025\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
-        asm_pass4 = "pass4:\n\tli a2, 11068046444225730969\n\tsd t2, {0}(t1)\n\tld t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 4)
-        asm_pass5 = "pass5:\n\tli a2, 18446744073709551513\n\tlb t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 1)
-        asm_pass6 = "pass6:\n\tli a2, 18446744073709525401\n\tlh t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 2)
-        asm_pass7 = "pass7:\n\tli a2, 18446744071991564697\n\tlw t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 3)
-        asm_pass8 = "pass8:\n\tli a2, 11068046444225730969\n\tld t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 4)
+    	asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n"
+        asm_pass1 = "pass1:\n\tli a2, 0x99\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
+        asm_pass2 = "pass2:\n\tli a2, 0x9999\n\tsh t2, {0}(t1)\n\tlhu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
+        asm_pass3 = "pass3:\n\tli a2, 0x66669999\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
+        asm_pass4 = "pass4:\n\tli a2, 0x9999999999999999\n\tsd t2, {0}(t1)\n\tld t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 4)
+        asm_pass5 = "pass5:\n\tli a2, 0xFFFFFFFFFFFFFF99\n\tlb t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 1)
+        asm_pass6 = "pass6:\n\tli a2, 0xFFFFFFFFFFFF9999\n\tlh t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 2)
+        asm_pass7 = "pass7:\n\tli a2, 0xFFFFFFFF99999999\n\tlw t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 3)
+        asm_pass8 = "pass8:\n\tli a2, 0x9999999999999999\n\tld t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 4)
         
         asm_pass9 = "pass9:\n\tli a2, 0x99999999\n\t"
         for i in range(7)
