@@ -39,7 +39,7 @@ class uatg_cache_dcache_fill(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
-    	asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n"
+    	asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n\tli t4, 0x1111\n"
         asm_pass1 = "pass1:\n\tli a2, 0x99\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
         asm_pass2 = "pass2:\n\tli a2, 0x9999\n\tsh t2, {0}(t1)\n\tlhu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
         asm_pass3 = "pass3:\n\tli a2, 0x99999999\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
@@ -60,7 +60,7 @@ class uatg_cache_dcache_fill(IPlugin):
         asm_pass10 += "lb s1, {0}(t1)\n\tadd s6, s6, s1\n\tbne s6, a2, end\n".format((self._word_size*self._block_size*4 + 16*3))
         
         asm_pass11 = "pass11:\n\tli a2, 0x9999999999999999\n\tlw s1, {0}(t1)\n\tadd s6, s6, s1\n\tslli s6, s6, 32\n\tlw s1, {0}(t1)\n\tadd s6, s6, s1\n\tbne s6, s2, end\n".format(self._word_size*self._block_size*4, (self._word_size*self._block_size*4)+32)
-        asm_pass12 = "pass12:\n\tmv t3, zero\n\tli a2, 0x1111\n\tsh a2, {0}(t1)\n\tld t3, {1}(t1)\n\tbeqz t3, end\n".format(self._block_size*self._word_size + 4, self._block_size*self._word_size)
+        asm_pass12 = "pass12:\n\tli a2, 0x9999999911119999\n\tsh t4, {0}(t1)\n\tld t3, {1}(t1), bne t3, a2, end\n".format(self._word_size * self._block_size + (8 * 4), self._word_size * self._block_size)
         asm_valid = "valid:\n\taddi x31, x0, 1\n"
         asm_end = "end:\n\tnop\n\tfence.i\n"
         
