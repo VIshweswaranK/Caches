@@ -42,7 +42,7 @@ class uatg_cache_dcache_fill(IPlugin):
     	asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n"
         asm_pass1 = "pass1:\n\tli a2, 0x99\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
         asm_pass2 = "pass2:\n\tli a2, 0x9999\n\tsh t2, {0}(t1)\n\tlhu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
-        asm_pass3 = "pass3:\n\tli a2, 0x66669999\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
+        asm_pass3 = "pass3:\n\tli a2, 0x99999999\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
         asm_pass4 = "pass4:\n\tli a2, 0x9999999999999999\n\tsd t2, {0}(t1)\n\tld t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 4)
         asm_pass5 = "pass5:\n\tli a2, 0xFFFFFFFFFFFFFF99\n\tlb t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 1)
         asm_pass6 = "pass6:\n\tli a2, 0xFFFFFFFFFFFF9999\n\tlh t3, {0}(t1)\n\tbne t3, a2, end\n".format(self._word_size * self._block_size * 2)
