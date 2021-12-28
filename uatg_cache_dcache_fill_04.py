@@ -5,7 +5,7 @@ from typing import Dict, Union, Any, List
 import re
 import os
 
-class uatg_cache_dcache_fill(IPlugin):
+class uatg_cache_dcache_fill_04(IPlugin):
     def __init__(self):
         super().__init__()
         self._sets = 64

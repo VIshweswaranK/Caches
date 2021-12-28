@@ -6,7 +6,7 @@ import re
 import os
 import random
 
-class uatg_cache_dcache_fill(IPlugin):
+class uatg_cache_dcache_fill_buffer_01(IPlugin):
     def __init__(self):
         super().__init__()
         self._sets = 64
