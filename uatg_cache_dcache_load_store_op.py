@@ -40,7 +40,7 @@ class uatg_cache_dcache_load_store_op(IPlugin):
         ''
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
-    	asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n\tli t4, 0x1111\n"
+        asm_main = "li t1, 8000\n\tli t2, 0x9999999999999999\n\tli t4, 0x1111\n"
         asm_pass1 = "pass1:\n\tli a2, 0x99\n\tsb t2, {0}(t1)\n\tlbu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 1)
         asm_pass2 = "pass2:\n\tli a2, 0x9999\n\tsh t2, {0}(t1)\n\tlhu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 2)
         asm_pass3 = "pass3:\n\tli a2, 0x99999999\n\tsw t2, {0}(t1)\n\tlwu t3, {0}(t1)\n\tbne a2, t3, end\n".format(self._word_size * self._block_size * 3)
@@ -66,10 +66,10 @@ class uatg_cache_dcache_load_store_op(IPlugin):
         asm_end = "end:\n\tnop\n\tfence.i\n"
         
 
-	    asm = asm_main + asm_pass1 + asm_pass2 + asm_pass3 + asm_pass4 + asm_pass5 + asm_pass6 + asm_pass7 + asm_pass8 + asm_pass9 + asm_pass10 + asm_pass11 + asm_pass12 + asm_valid + asm_end
+        asm = asm_main + asm_pass1 + asm_pass2 + asm_pass3 + asm_pass4 + asm_pass5 + asm_pass6 + asm_pass7 + asm_pass8 + asm_pass9 + asm_pass10 + asm_pass11 + asm_pass12 + asm_valid + asm_end
         compile_macros = []    	
     	
-    	return [{
+        return [{
             'asm_code': asm,
             'asm_sig': '',
             'compile_macros': compile_macros

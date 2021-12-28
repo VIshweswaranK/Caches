@@ -47,20 +47,20 @@ class uatg_cache_dcache_fill_buffer_02(IPlugin):
         for i in range(self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
             
-    	asm_main = "fence\n\tli t0, 69\n\tli t3, {0}\n\tla t2, rvtest_data\n".format(self._sets * self._ways)
-    	asm_lab1 = "lab1:\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, lab2\n\taddi t4, t4, 1\n\tj lab1\n".format(self._word_size * self._block_size)
-    	asm_nop = "asm_nop:\n"
+        asm_main = "fence\n\tli t0, 69\n\tli t3, {0}\n\tla t2, rvtest_data\n".format(self._sets * self._ways)
+        asm_lab1 = "lab1:\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, lab2\n\taddi t4, t4, 1\n\tj lab1\n".format(self._word_size * self._block_size)
+        asm_nop = "asm_nop:\n"
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
         asm_sw = "asm_sw:\n"
         for i in range(self._fb_size * 2):
             asm_sw += "\tsw t0, {0}(t2)\n".format(32 * (i + 1))
-    	asm_end = "end:\n\tnop\n\tfence.i\n"
+        asm_end = "end:\n\tnop\n\tfence.i\n"
     	
-	    asm = asm_main + asm_lab1 + asm_nop + asm_sw + asm_end
+        asm = asm_main + asm_lab1 + asm_nop + asm_sw + asm_end
         compile_macros = []    	
     	
-    	return [{
+        return [{
             'asm_code': asm,
             'asm_data': asm_data,
             'asm_sig': '',

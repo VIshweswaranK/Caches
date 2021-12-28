@@ -47,7 +47,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         for i in range(self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
-    	asm_main = "\n\tfence\n\t\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
+        asm_main = "\n\tfence\n\t\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
         asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
         asm_nop = "nop:\n\tmv t4, x0\n"
         for i in range(self._fb_size * 2):
@@ -57,10 +57,10 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         for i in range(100)
             asm_st += "\tlw, {0}(t2)".format(i*(self._word_size*self._block_size*self._sets))
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
-	    asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end
+        asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end
         compile_macros = []    	
     	
-    	return [{
+        return [{
             'asm_code': asm,
             'asm_data': asm_data,
             'asm_sig': '',
