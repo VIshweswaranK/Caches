@@ -15,7 +15,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         self._ways = 4
         self._fb_size = 9
     
-    def execute(self, core_yaml, isa_yaml):
+    def execute(self, core_yaml, isa_yaml) -> bool:
         _dcache_dict = core_yaml['dcache_configuration']
         _dcache_en = _dcache_dict['instantiate']
         self._sets = _dcache_dict['sets']
@@ -23,6 +23,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         self._block_size = _dcache_dict['block_size']
         self._ways = _dcache_dict['ways']
         self._fb_size = _dcache_dict['fb_size']
+        return True
 
     def check_log(self, log_file_path, reports_dir):
         f = open(log_file_path, "r")

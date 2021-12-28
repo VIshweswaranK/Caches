@@ -14,13 +14,14 @@ class uatg_cache_dcache_fill_01(IPlugin):
         self._block_size = 8
         self._ways = 4
     
-    def execute(self, core_yaml, isa_yaml):
+    def execute(self, core_yaml, isa_yaml) -> bool:
         _dcache_dict = core_yaml['dcache_configuration']
         _dcache_en = _dcache_dict['instantiate']
         self._sets = _dcache_dict['sets']
         self._word_size = _dcache_dict['word_size']
         self._block_size = _dcache_dict['block_size']
         self._ways = _dcache_dict['ways']
+        return True
 
     def check_log(self, log_file_path, reports_dir):
         f = open(log_file_path, "r")
