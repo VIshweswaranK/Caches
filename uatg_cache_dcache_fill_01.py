@@ -30,7 +30,7 @@ class uatg_cache_dcache_fill_01(IPlugin):
 
         test_report = {
                 "cache_dcache_fill_01_report": {
-                    'Doc': "ASM should have filled the cache of size {0}. This report verifies that.".format(self._sets * self._word_size * self._block_size * self._ways / 8)
+                    'Doc': "ASM should have filled the cache of size {0}. This report verifies that.".format(self._sets * self._word_size * self._block_size * self._ways / 8),
                     'Execution status': ''
                     }
                 }
