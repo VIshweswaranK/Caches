@@ -4,6 +4,7 @@ import uatg.regex_formats as rf
 from typing import Dict, Union, Any, List
 import re
 import os
+import random
 
 class uatg_cache_dcache_fill_04(IPlugin):
     def __init__(self):
