@@ -47,7 +47,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
         for i in range(self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
-        asm_main = "fence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {0}\n\tla t2, rvtest_data\n".format(self._ways * self._sets)
+        asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {0}\n\tla t2, rvtest_data\n".format(self._ways * self._sets)
         asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\tblt t4, t5, lab1\n".format(self._block_size * self._block_size)
         asm_lab2 = "lab2:\n\tmv t4, x0\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\taddi t1, t1, 1\n\tblt t1, t3, lab1\n".format(self._block_size * self._word_size)
         asm_nop = "asm_nop:\n"
