@@ -30,7 +30,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - Perform all possible types of load/store access (byte, hword, word, dword)
 - Perform a load/store hit in the RAMS
 - Perform a load/store hit in the Fill-buffer
-- Perform an 10 op
+- Perform an I/O operation
 - Perform a store-to-load forwarding scenario from the store-buffer
 - Perform a replacement on all sets.
 - Check if fence and fence.iwork properly
