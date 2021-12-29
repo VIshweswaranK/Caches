@@ -32,7 +32,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
 
         test_report = {
                 "cache_dcache_fill_01_report": {
-                    'Doc': "ASM should have filled the fill buffer of size {0}. This report verifies that.".format(self._fb_size)
+                    'Doc': "ASM should have filled the fill buffer of size {0}. This report verifies that.".format(self._fb_size),
                     'Execution status': ''
                     }
                 }
@@ -54,7 +54,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
             asm_nop += "\tnop\n"
 
         asm_st = "asm_st:\n"
-        for i in range(100)
+        for i in range(100):
             asm_st += "\tlw, {0}(t2)".format(i*(self._word_size*self._block_size*self._sets))
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
         asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end

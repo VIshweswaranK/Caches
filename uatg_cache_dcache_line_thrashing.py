@@ -32,7 +32,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
 
         test_report = {
                 "cache_dcache_fill_01_report": {
-                    'Doc': "ASM should have filled the fill buffer of size {0}. This report verifies that.".format(self._fb_size)
+                    'Doc': "ASM should have filled the fill buffer of size {0}. This report verifies that.".format(self._fb_size),
                     'Execution status': ''
                     }
                 }
