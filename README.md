@@ -96,6 +96,74 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
      For the size of `(block_size * sets * ways)`, we do the following:
     `asm_data +=  "\t.word 0x{0:08x}\n".format(random.randrange(16**8)`
 
+## Code Generation using UATG
+```
+    INFO | ****** Micro-Architectural Test Generator - UATG *******
+    INFO | Version : 1.3.0
+    INFO | Copyright (c) 2021, InCore Semiconductors Pvt. Ltd.
+    INFO | All Rights Reserved.
+    INFO | uatg dir is /home/bkkarthik/miniconda3/envs/chromite3.7/lib/python3.7/site-packages/uatg
+    INFO | work_dir is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/
+   DEBUG | The modules are Caches
+    INFO | ****** Generating Tests ******
+   DEBUG | Directory for Caches is /home/bkkarthik/incore/pre/chromite_uatg_tests/modules/Caches
+    INFO | Starting plugin Creation for Caches
+   DEBUG | Created plugin for uatg_cache_dcache_load_store_op
+   DEBUG | Created plugin for uatg_cache_dcache_fill_02
+   DEBUG | Created plugin for uatg_cache_dcache_fill_03
+   DEBUG | Created plugin for uatg_cache_dcache_fill_buffer_01
+   DEBUG | Created plugin for uatg_cache_dcache_set_thrashing
+   DEBUG | Created plugin for uatg_cache_dcache_fill_01
+   DEBUG | Created plugin for uatg_cache_dcache_fill_buffer_02
+   DEBUG | Created plugin for uatg_cache_dcache_line_thrashing
+   DEBUG | Created plugin for uatg_cache_dcache_fill_04
+    INFO | Created plugins for Caches
+   DEBUG | Generating assembly tests for Caches
+   DEBUG | Selected test: uatg_cache_dcache_fill_04-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_04-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_04
+   DEBUG | Selected test: uatg_cache_dcache_line_thrashing-001
+   DEBUG | Generating test for uatg_cache_dcache_line_thrashing-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_line_thrashing
+   DEBUG | Selected test: uatg_cache_dcache_fill_03-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_03-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_03
+   DEBUG | Selected test: uatg_cache_dcache_load_store_op-001
+   DEBUG | Selected test: uatg_cache_dcache_fill_buffer_01-001
+   DEBUG | Generating test for uatg_cache_dcache_load_store_op-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_buffer_01-001
+   DEBUG | Selected test: uatg_cache_dcache_fill_01-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_01-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_load_store_op
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_buffer_01
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_01
+   DEBUG | Selected test: uatg_cache_dcache_fill_buffer_02-001
+   DEBUG | Selected test: uatg_cache_dcache_set_thrashing-001
+   DEBUG | Generating test for uatg_cache_dcache_set_thrashing-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_buffer_02-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_set_thrashing
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_buffer_02
+   DEBUG | Selected test: uatg_cache_dcache_fill_02-001
+   DEBUG | Generating test for uatg_cache_dcache_fill_02-001
+   DEBUG | Finished Generating Assembly Files for uatg_cache_dcache_fill_02
+   DEBUG | Finished Generating Assembly Tests for Caches
+    INFO | Creating test_list for the Caches
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_buffer_02-001/uatg_cache_dcache_fill_buffer_02-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_set_thrashing-001/uatg_cache_dcache_set_thrashing-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_03-001/uatg_cache_dcache_fill_03-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_load_store_op-001/uatg_cache_dcache_load_store_op-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_buffer_01-001/uatg_cache_dcache_fill_buffer_01-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_line_thrashing-001/uatg_cache_dcache_line_thrashing-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_02-001/uatg_cache_dcache_fill_02-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_04-001/uatg_cache_dcache_fill_04-001.S
+   DEBUG | Current test is /home/bkkarthik/incore/pre/chromite-core-verif/mywork/Caches/uatg_cache_dcache_fill_01-001/uatg_cache_dcache_fill_01-001.S
+   DEBUG | Dumping makefile
+    INFO | ****** Finished Generating Tests ******
+   DEBUG | Using user specified linker: /home/bkkarthik/incore/pre/chromite_uatg_tests/target/link.ld
+   DEBUG | Using user specified model_test file: /home/bkkarthik/incore/pre/chromite_uatg_tests/target/model_test.h
+    INFO | Test List was generated by UATG. You can find it in the work dir 
+
+```
 
 ## Contributors
 Vishweshwaran K <<vishwa.kans07@gmail.com>>,
