@@ -53,7 +53,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
 
         asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {0}\n\tla t2, rvtest_data".format(self._ways * self._sets)
 
-        for i in range(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
+        for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
             asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
         asm_main += "\n"
 
@@ -65,8 +65,8 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
     	
         asm_lt = "asm_lt:\n"
         
-        for j in range(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
-            for i in range(self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
+        for j in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            for i in range(int(self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
                 asm_lt += "\tsw t0, {0}(x{1})\n".format(self._block_size * self._word_size * (i + 1),27 - j)
 
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
