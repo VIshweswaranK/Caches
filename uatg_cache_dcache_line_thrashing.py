@@ -5,6 +5,7 @@ from typing import Dict, Union, Any, List
 import re
 import os
 import random
+import math
 
 class uatg_cache_dcache_line_thrashing(IPlugin):
     def __init__(self):
@@ -42,21 +43,31 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
 
+        high = 0
+        while(high < 2048):
+            high = high + (self._block_size * self._word_size)
         asm_data = '\nrvtest_data:\n'
 
         for i in range(self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
-        asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {0}\n\tla t2, rvtest_data\n".format(self._ways * self._sets)
-        asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\tblt t4, t5, lab1\n".format(self._block_size * self._block_size)
+        asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {0}\n\tla t2, rvtest_data".format(self._ways * self._sets)
+
+        for i in range(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
+            asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
+        asm_main += "\n"
+
+        asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\taddi t4, t4, 1\n\tblt t4, t5, lab1\n".format(self._block_size * self._block_size)
         asm_lab2 = "lab2:\n\tmv t4, x0\n\tlw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\taddi t1, t1, 1\n\tblt t1, t3, lab1\n".format(self._block_size * self._word_size)
         asm_nop = "asm_nop:\n"
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
     	
         asm_lt = "asm_lt:\n"
-        for i in range(self._ways * self._sets * 2):
-            asm_lt += "\tsw t0, {0}(t2)\n".format(64 * (i + 1))
+        
+        for j in range(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
+            for i in range(self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high)):
+                asm_lt += "\tsw t0, {0}(x{1})\n".format(self._block_size * self._word_size * (i + 1),27 - j)
 
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
         asm = asm_main + asm_lab1 + asm_lab2 + asm_nop + asm_lt + asm_end
