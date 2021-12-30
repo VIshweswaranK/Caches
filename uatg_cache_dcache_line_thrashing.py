@@ -66,7 +66,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
         asm_lt = "asm_lt:\n"
         
         for j in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
-            for i in range(int(self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            for i in range(int(1 + self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
                 asm_lt += "\tsw t0, {0}(x{1})\n".format(self._block_size * self._word_size * (i + 1),27 - j)
 
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
