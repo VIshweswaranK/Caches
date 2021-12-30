@@ -55,7 +55,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
 
         asm_st = "asm_st:\n"
         for i in range(100):
-            asm_st += "\tlw, {0}(t2)\n".format(i*(self._word_size*self._block_size*self._sets))
+            asm_st += "\tlw t0, {0}(t2)\n".format(i*(self._word_size*self._block_size*self._sets))
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
         asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end
         compile_macros = []    	
