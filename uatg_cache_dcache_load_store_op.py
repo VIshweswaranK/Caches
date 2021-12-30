@@ -52,7 +52,7 @@ class uatg_cache_dcache_load_store_op(IPlugin):
         
         asm_pass9 = "pass9:\n\tli a2, 0x9999999999999999\n\t"
         for i in range(7):
-            asm_pass9 += "lb s1, {0}(t1)\n\tadd s6, s6, s1\n\tslli ,s6, s6, 8\n\t".format(self._block_size*self._word_size*4+(8*i))
+            asm_pass9 += "lb s1, {0}(t1)\n\tadd s6, s6, s1\n\tslli, s6, s6, 8\n\t".format(self._block_size*self._word_size*4+(8*i))
         asm_pass9 += "lb s1, {0}(t1)\n\tadd s6, s6, s1\n\tbne s6, a2, end\n".format(self._word_size*self._block_size*4 + (8*7))
         
         asm_pass10 = "pass10:\n\tli a2, 0x9999999999999999\n\t"
