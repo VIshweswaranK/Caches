@@ -48,8 +48,8 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
         asm_main = "\n\tfence\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
-        asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
-        asm_nop = "nop:\n\tmv t4, x0\n"
+        asm_lab1 = "\nlab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
+        asm_nop = "\nnop:\n\tmv t4, x0\n"
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
 
