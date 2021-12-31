@@ -55,6 +55,10 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
 
         for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
             asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
+
+        for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            asm_main += "\n\tadd x{0}, x{0},t2 ".format(27 - i)
+        
         asm_main += "\n"
 
         asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\taddi t0, t0, 1\n\taddi t4, t4, 1\n\tblt t4, t5, lab1\n".format(self._block_size * self._block_size)
@@ -62,7 +66,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
         asm_nop = "asm_nop:\n"
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
-    	
+        
         asm_lt = "asm_lt:\n"
         
         for j in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
@@ -71,8 +75,8 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
 
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
         asm = asm_main + asm_lab1 + asm_lab2 + asm_nop + asm_lt + asm_end
-        compile_macros = []    	
-    	
+        compile_macros = []        
+        
         return [{
             'asm_code': asm,
             'asm_data': asm_data,
