@@ -1,5 +1,3 @@
-![needed-attention](https://img.shields.io/static/v1.svg?label=Needed Attention - #3&message=Passing&color=blue)
-
 # Caches
 
 This repository contains the python scripts to generate RISC-V Assembly for testing the [Cache subsystem](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/tree/master/) in the Chromite Core by [InCore Semiconductors](https://incoresemi.com/).
