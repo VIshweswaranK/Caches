@@ -44,7 +44,7 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
 
         high = 0
-        while(high < 4096 - (self._block_size * self._word_size)):
+        while(high < 2048 - (self._block_size * self._word_size)):
             high = high + (self._block_size * self._word_size)
         asm_data = '\nrvtest_data:\n'
 
