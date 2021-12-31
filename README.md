@@ -2,7 +2,7 @@
 
 This repository contains the python scripts to generate RISC-V Assembly for testing the [Cache subsystem](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/tree/master/) in the Chromite Core by [InCore Semiconductors](https://incoresemi.com/).
 
-A [Data Caches](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/blob/1r1w-dcache-instance/src/dcache/dcache1r1w.bsv) and [Instruction Caches](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/blob/1r1w-dcache-instance/src/icache/icache.bsv) are developed as modules by [InCore Semiconductors](https://incoresemi.com/).
+[Data Caches](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/blob/1r1w-dcache-instance/src/dcache/dcache1r1w.bsv) and [Instruction Caches](https://gitlab.com/incoresemi/blocks/cache_subsystem/-/blob/1r1w-dcache-instance/src/icache/icache.bsv) are developed as modules by [InCore Semiconductors](https://incoresemi.com/).
 
 A rough explaination of the Caches is given [here](https://chromite.readthedocs.io/en/using-csrbox/cache.html).
 
@@ -117,9 +117,9 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 
 - Perform a  `fence`  operation to clear out the data cache subsystem and the fill buffer.
 - First the cache is filled up using the following logic. All the ways of a set should either be  *dirty or clean*.
-- This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the line thrashing process begins.
-- Now after the fill buffer is full, with each store operation a cache miss is encountered and the non-dirty line in the set will be replaced.
-- This process is iterated to test each cache line.
+- This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the set thrashing process begins.
+- Now after the fill buffer is full, with each store operation a cache miss is encountered.
+- This process is iterated to test each cache set.
 
 ## Initializing test data
 
