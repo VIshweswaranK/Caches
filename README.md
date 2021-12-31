@@ -10,7 +10,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 
 ## Test Status
 
-![uatg_cache_dcache_fill_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_01&message=Passing&color=green) ![uatg_cache_dcache_fill_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_02&message=Passing&color=green) ![uatg_cache_dcache_fill_03 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_03&message=Passing&color=green) ![uatg_cache_dcache_fill_04 - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_04&message=Failing&color=red) ![uatg_cache_dcache_fill_buffer_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_01&message=Passing&color=green) ![uatg_cache_dcache_fill_buffer_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_02&message=Passing&color=green) ![uatg_cache_dcache_line_thrashing - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_line_thrashing&message=Passing&color=green) ![uatg_cache_dcache_load_store_op - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_load_store_op&message=Passing&color=green) ![uatg_cache_dcache_set_thrashing - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_set_thrashing&message=failing&color=red)
+![uatg_cache_dcache_fill_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_01&message=Passing&color=green) ![uatg_cache_dcache_fill_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_02&message=Passing&color=green) ![uatg_cache_dcache_fill_03 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_03&message=Passing&color=green) ![uatg_cache_dcache_fill_04 - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_04&message=Failing&color=red) ![uatg_cache_dcache_fill_buffer_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_01&message=Passing&color=green) ![uatg_cache_dcache_fill_buffer_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_02&message=Passing&color=green) ![uatg_cache_dcache_line_thrashing - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_line_thrashing&message=Passing&color=green) ![uatg_cache_dcache_load_store_op - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_load_store_op&message=Passing&color=green) ![uatg_cache_dcache_set_thrashing - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_set_thrashing&message=Failing&color=red)
 
 ## File Structure
 
@@ -40,17 +40,17 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 
 - Fill the cache completely based on the size mentioned in the core64.yaml input.
 - Try to fill the fill-buffer completely.
-- Perform cache line thrashing
-- Perform cache set thrashing
-- Perform all possible types of load/store access (byte, hword, word, dword)
-- Perform a load/store hit in the RAMS
-- Perform a load/store hit in the Fill-buffer
-- Perform an I/O operation
-- Perform a store-to-load forwarding scenario from the store-buffer
+- Perform cache line thrashing.
+- Perform cache set thrashing.
+- Perform all possible types of load/store access (byte, hword, word, dword).
+- Perform a load/store hit in the RAMS.
+- Perform a load/store hit in the Fill-buffer.
+- Perform an I/O operation.
+- Perform a store-to-load forwarding scenario from the store-buffer.
 - Perform a replacement on all sets.
-- Check if fence and fence.i work properly
+- Check if fence and fence.i work properly.
 - Check if performance counters are correctly incremented.
-- Check to see if we can perform simultaneous io and cached ops
+- Check to see if we can perform simultaneous io and cached ops.
 
 ## Code Description
 
@@ -71,7 +71,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ### dcache_fill_03.py
 
 - Perform a `fence` operation to clear out the data cache subsystem and the fill buffer.
-- Perform `numerous load operations` to fill up the cache
+- Perform `numerous load operations` to fill up the cache.
 - In each iteration, we visit the next way in the same set. Once all the ways in a set are touched, we visit the next set.
 - The total number of iterations is parameterized based on YAML input.
 
@@ -97,7 +97,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ### dcache_fill_buffer_02.py
 
 - Perform a `fence` operation to clear out the data cache subsystem and the fill buffer.
-- Perform `numerous load operations` to fill up the cache
+- Perform `numerous load operations` to fill up the cache.
 - In each iteration, we visit the next way in the same set. Once all the ways in a set are touched, we visit the next set.
 - The total number of iterations is parameterized based on YAML input.
 - Once the cache is full, we perform numerous `consecutive load operations`.
@@ -111,7 +111,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - Now a series of `nop` operations are done inorder the ensure that the fillbuffer is empty and the cache is completely full.
 - This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the line thrashing process begins.
 - Now after the fill buffer is full, with each store operation a cache miss is encountered and the non-dirty line in the set will be replaced.
-- This process is iterated to test each cache line
+- This process is iterated to test each cache line.
 
 ### dcache_set_thrashing.py
 
@@ -119,7 +119,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - First the cache is filled up using the following logic. All the ways of a set should either be  *dirty or clean*.
 - This is followed by a large series of back to back `store operations` with an address that maps to a single set in the cache. This ensures that the fillbuffer gets filled and the line thrashing process begins.
 - Now after the fill buffer is full, with each store operation a cache miss is encountered and the non-dirty line in the set will be replaced.
-- This process is iterated to test each cache line
+- This process is iterated to test each cache line.
 
 ## Initializing test data
 
