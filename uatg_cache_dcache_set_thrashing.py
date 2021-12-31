@@ -5,6 +5,7 @@ from typing import Dict, Union, Any, List
 import re
 import os
 import random
+import math
 
 class uatg_cache_dcache_set_thrashing(IPlugin):
     def _init_(self):
@@ -42,20 +43,29 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
 
+        high = 0
+        while(high < 4096 - (self._block_size * self._word_size)):
+            high = high + (self._block_size * self._word_size)
         asm_data = '\nrvtest_data:\n'
 
         for i in range(self._block_size * self._sets * self._ways*2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
         asm_main = "\n\tfence\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
+        
+        for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
+        asm_main += "\n"
+        
         asm_lab1 = "\nlab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
         asm_nop = "\nnop:\n\tmv t4, x0\n"
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
 
         asm_st = "asm_st:\n"
-        for i in range(100):
-            asm_st += "\tlw t0, {0}(t2)\n".format(i*(self._word_size*self._block_size*self._sets))
+        for j in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            for i in range(int(1 + self._ways * self._sets * 2 / math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+                asm_st += "\tlw t0, {0}(x{1})\n".format(self._block_size * self._word_size * (i + 1),27 - j)
         asm_end = "\nend:\n\tnop\n\tfence.i\n"
         asm = asm_main + asm_lab1 + asm_nop + asm_st + asm_end
         compile_macros = []    	
