@@ -8,6 +8,10 @@ A rough explaination of the Caches is given [here](https://chromite.readthedocs.
 
 This repository can be initialised as a submodule in [chromite_uatg_tests](https://github.com/incoresemi/chromite_uatg_tests).
 
+## Test Status
+
+![uatg_cache_dcache_fill_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_01&message=Passing&color=green) ![uatg_cache_dcache_fill_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_02&message=Passing&color=green) ![uatg_cache_dcache_fill_03 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_03&message=Passing&color=green) ![uatg_cache_dcache_fill_04 - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_04&message=Failing&color=red) ![uatg_cache_dcache_fill_buffer_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_01&message=Passing&color=green) ![uatg_cache_dcache_fill_buffer_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_02&message=Passing&color=green) ![uatg_cache_dcache_line_thrashing - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_line_thrashing&message=Passing&color=green) ![uatg_cache_dcache_load_store_op - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_load_store_op&message=Passing&color=green) ![uatg_cache_dcache_set_thrashing - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_set_thrashing&message=Buggy&color=red)
+
 ## File Structure
 
 ```text
@@ -31,8 +35,6 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 
 2 directories, 14 files
 ```
-
-## Test Status
 
 ## Test Status
 
