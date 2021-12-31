@@ -13,6 +13,12 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ```text
 .
 ├── README.md -- Describes the idea behind each test and how the ASM is generated efficiently using Python 3.
+├── River Core Reports
+│   ├── assets
+│   │   ├── style1.css -- CSS for river_core_test_1.html
+│   │   └── style2.css -- CSS for river_core_test_2.html
+│   ├── river_core_test_1.html -- River Core Report
+│   └── river_core_test_2.html -- River Core Report
 ├── uatg_cache_dcache_fill_01.py -- Generates ASM to fill the Data Cache by performing consecutive stores at different address locations, jumps to the next set in each iteration.
 ├── uatg_cache_dcache_fill_02.py -- Generates ASM to fill the Data Cache by performing consecutive stores at different address locations, jumps to the next line in each iteration.
 ├── uatg_cache_dcache_fill_03.py -- Generates ASM to fill the Data Cache by performing consecutive loads at different address locations, jumps to the next set in each iteration.
@@ -22,7 +28,15 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 ├── uatg_cache_dcache_line_thrashing.py -- Generates ASM to perform Cache Line Thrashing.
 ├── uatg_cache_dcache_load_store_op.py -- Generates ASM to perform all types of load and store operations.
 └── uatg_cache_dcache_set_thrashing.py -- Generates ASM to perform Cache Set Thrashing.
+
+2 directories, 14 files
 ```
+
+## Test Status
+
+## Test Status
+
+![uatg_cache_dcache_fill_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_01&message=Passing&color=green) ![uatg_cache_dcache_fill_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_02&message=Passing&color=green) ![uatg_cache_dcache_fill_03 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_03&message=Passing&color=green) ![uatg_cache_dcache_fill_04 - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_04&message=Failing&color=red) ![uatg_cache_dcache_fill_buffer_01 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_01&message=Passing&color=green) ![uatg_cache_dcache_fill_buffer_02 - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_fill_buffer_02&message=Passing&color=green) ![uatg_cache_dcache_line_thrashing - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_line_thrashing&message=Passing&color=green) ![uatg_cache_dcache_load_store_op - passing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_load_store_op&message=Passing&color=green) ![uatg_cache_dcache_set_thrashing - failing](https://img.shields.io/static/v1.svg?label=uatg_cache_dcache_set_thrashing&message=Buggy&color=red)
 
 ## Test Description
 
@@ -36,7 +50,7 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - Perform an I/O operation
 - Perform a store-to-load forwarding scenario from the store-buffer
 - Perform a replacement on all sets.
-- Check if fence and fence.iwork properly
+- Check if fence and fence.i work properly
 - Check if performance counters are correctly incremented.
 - Check to see if we can perform simultaneous io and cached ops
 
