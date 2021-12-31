@@ -55,6 +55,10 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         
         for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
             asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
+        
+        for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
+            asm_main += "\n\tadd x{0}, x{0}, t2 ".format(27 - i)
+        
         asm_main += "\n"
         
         asm_lab1 = "\nlab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
