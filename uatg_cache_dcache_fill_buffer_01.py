@@ -2,12 +2,13 @@ from yapsy.IPlugin import IPlugin
 from ruamel.yaml import YAML
 import uatg.regex_formats as rf
 from typing import Dict, Union, Any, List
-import re
-import os
 import random
 
 class uatg_cache_dcache_fill_buffer_01(IPlugin):
     def __init__(self):
+        """This function defines the default values for all the parameters being taken as an input
+        from the core and isa yaml files."""
+
         super().__init__()
         self._sets = 64
         self._word_size = 8
@@ -16,6 +17,10 @@ class uatg_cache_dcache_fill_buffer_01(IPlugin):
         self._fb_size = 9
     
     def execute(self, core_yaml, isa_yaml) -> bool:
+        """This function gives us access to the core and isa configurations as a dictionary,
+        and is used to parameterize inputs to efficiently generate asm for all configurations
+        of the chromite core."""
+
         _dcache_dict = core_yaml['dcache_configuration']
         _dcache_en = _dcache_dict['instantiate']
         self._sets = _dcache_dict['sets']
@@ -23,40 +28,36 @@ class uatg_cache_dcache_fill_buffer_01(IPlugin):
         self._block_size = _dcache_dict['block_size']
         self._ways = _dcache_dict['ways']
         self._fb_size = _dcache_dict['fb_size']
-        return True
-
-    def check_log(self, log_file_path, reports_dir):
-        f = open(log_file_path, "r")
-        log_file = f.read()
-        f.close()
-
-        test_report = {
-                "cache_dcache_fill_01_report": {
-                    'Doc': "ASM should have filled the fill buffer of size {0}. This report verifies that.".format(self._fb_size),
-                    'Execution status': ''
-                    }
-                }
-
-    def generate_covergroups(self, config_file):
-        ''
+        return _dcache_en
 
     def generate_asm(self) -> List[Dict[str, Union[Union[str, list], Any]]]:
+        """This function leverages string processing capabilities to efficiently generate
+        ASM for this test. This function returns a List that consists of the asm code,
+        rvtest_data and any signature dump."""
 
+        # asm_data is the test data that is loaded into memory. We use this to perform load operations.
         asm_data = '\nrvtest_data:\n'
 
+        # We load the memory with data twice the size of our dcache.
         for i in range(self._block_size * self._sets * self._ways*2):
+            # We generate random 8 byte numbers.
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
         asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tla t2, rvtest_data\n".format(self._sets * self._ways)
         asm_lab1 = "lab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, asm_nop\n\taddi t4, t4, 1\n\tj lab1\n".format(self._word_size * self._block_size)
         asm_nop = "asm_nop:\n"
+
+        # Perform a series of NOPs to empty the fill buffer.
         for i in range(self._fb_size * 2):
             asm_nop += "\tnop\n"
+        
+        # Perform a serious of continuous store operations with no window for an opportunistic release.
         asm_sw = "asm_sw:\n"
         for i in range(self._fb_size * 2):
             asm_sw += "\tsw t0, {0}(t2)\n".format(32 * (i + 1))
         asm_end = "end:\n\tnop\n\tfence.i\n"
     	
+        # Concatenate all pieces of ASM.
         asm = asm_main + asm_lab1 + asm_nop + asm_sw + asm_end
         compile_macros = []    	
     	
