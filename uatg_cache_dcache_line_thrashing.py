@@ -57,7 +57,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
             asm_main += "\n\tli x{0}, {1}".format(27 - i, ((high + (self._word_size * self._block_size)) * (i+1)))
 
         for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
-            asm_main += "\n\tadd x{0}, x{0},t2 ".format(27 - i)
+            asm_main += "\n\tadd x{0}, x{0}, t2 ".format(27 - i)
         
         asm_main += "\n"
 
