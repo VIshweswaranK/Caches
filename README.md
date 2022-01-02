@@ -25,8 +25,8 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 │   └── river_core_test_2.html -- River Core Report
 ├── uatg_cache_dcache_fill_01.py -- Generates ASM to fill the Data Cache by performing consecutive stores at different address locations, jumps to the next set in each iteration.
 ├── uatg_cache_dcache_fill_02.py -- Generates ASM to fill the Data Cache by performing consecutive stores at different address locations, jumps to the next line in each iteration.
-├── uatg_cache_dcache_fill_03.py -- Generates ASM to fill the Data Cache by performing consecutive loads at different address locations, jumps to the next set in each iteration.
-├── uatg_cache_dcache_fill_04.py -- Generates ASM to fill the Data Cache by performing consecutive loads at different address locations, jumps to the next line in each iteration.
+├── uatg_cache_dcache_fill_03.py -- Generates ASM to fill the Data Cache by performing consecutive loads at different address locations, jumps to the next line in each iteration.
+├── uatg_cache_dcache_fill_04.py -- Generates ASM to fill the Data Cache by performing consecutive loads at different address locations, jumps to the next set in each iteration.
 ├── uatg_cache_dcache_fill_buffer_01.py -- Generates ASM to fill the Fill Buffer post filling the Data Cache completely. Performs consecutive stores.
 ├── uatg_cache_dcache_fill_buffer_02.py -- Generates ASM to fill the Fill Buffer post filling the Data Cache completely. Performs consecutive loads.
 ├── uatg_cache_dcache_line_thrashing.py -- Generates ASM to perform Cache Line Thrashing.
