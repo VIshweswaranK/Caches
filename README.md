@@ -130,8 +130,8 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - For the above three cases, the `load` should be identical to the store, as it is unsigned.
 - `Store` a `double word` using `sd` and `load` it back using `ld`
 - The following test cases are storing part of a double word where the remaining bits are set.
-- `Load` from the same locations again, but this time allow the data to be `sext`ed.
-- For the `sext`ed loads, compare with the sign extended versions of the test data.
+- `Load` from the same locations again, but this time allow the data to be sign extented.
+- For the sign extended loads, compare with the sign extended versions of the test data.
 - Always branch out if the load is not equal.
 - `Store` a `double word` and then modify only half of it using `sw`, Then immediately `load` the entire `double word` and check
   if the modification has updated the value from the store buffer.
