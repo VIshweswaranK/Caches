@@ -54,7 +54,7 @@ class uatg_cache_dcache_fill_buffer_01(IPlugin):
         # Perform a serious of continuous store operations with no window for an opportunistic release.
         asm_sw = "asm_sw:\n"
         for i in range(self._fb_size * 2):
-            asm_sw += "\tsw t0, {0}(t2)\n".format(64 * (i + 1))
+            asm_sw += "\tsw t0, {0}(t2)\n".format(self._block_size * self._word_size * (i + 1))
         asm_end = "end:\n\tnop\n\tfence.i\n"
     	
         # Concatenate all pieces of ASM.
