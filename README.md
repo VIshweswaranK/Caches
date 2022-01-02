@@ -133,6 +133,9 @@ This repository can be initialised as a submodule in [chromite_uatg_tests](https
 - `Load` from the same locations again, but this time allow the data to be `sext`ed.
 - For the `sext`ed loads, compare with the sign extended versions of the test data.
 - Always branch out if the load is not equal.
+- `Store` a `double word` and then modify only half of it using `sw`, Then immediately `load` the entire `double word` and check
+  if the modification has updated the value from the store buffer.
+
 
 ## Initializing test data
 
