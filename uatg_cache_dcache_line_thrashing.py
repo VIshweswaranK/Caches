@@ -47,7 +47,7 @@ class uatg_cache_dcache_line_thrashing(IPlugin):
         # asm_data is the test data that is loaded into memory. We use this to perform load operations.
         asm_data = '\nrvtest_data:\n'
 
-        for i in range(self._block_size * self._sets * self._ways*2):
+        for i in range(self._word_size * self._block_size * self._sets * self._ways * 2):
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
         asm_main = "\tfence\n\tli t0, 69\n\tli t3, {0}\n\tli t1, 1\n\tli t5, {1}\n\tla t2, rvtest_data\n\tli a1, {2}".format(self._sets, self._ways - 1, self._block_size * self._word_size * self._sets)
