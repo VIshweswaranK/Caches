@@ -48,9 +48,10 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         asm_data = '\nrvtest_data:\n'
 
         for i in range(self._word_size * self._block_size * self._sets * self._ways * 2):
+            # We generate random 4 byte numbers.
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
 
-        asm_main = "\n\tfence\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets, self._ways)
+        asm_main = "\n\tfence\n\tli t0, 69\n\tli t1, 1\n\tli t3, {0}\n\tla t2, rvtest_data".format(self._sets * self._ways)
         
         # We use the high number determined by YAML imputs to pass legal operands to load/store.
         for i in range(int(math.ceil((self._ways * self._sets * 2 * (self._word_size * self._block_size))/high))):
@@ -62,8 +63,8 @@ class uatg_cache_dcache_set_thrashing(IPlugin):
         
         asm_main += "\n"
         
-        asm_lab1 = "\nlab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
-        asm_nop = "\nnop:\n\tmv t4, x0\n"
+        asm_lab1 = "\nlab1:\n\tsw t0, 0(t2)\n\taddi t2, t2, {0}\n\tbeq t4, t3, asm_nop\n\taddi t4, t4, 1\n\tj lab1".format(self._block_size * self._word_size)
+        asm_nop = "\nasm_nop:\n\tmv t4, x0\n"
         
         # Empty the fill buffer by performing a series of NOPs
         for i in range(self._fb_size * 2):

@@ -38,7 +38,7 @@ class uatg_cache_dcache_fill_03(IPlugin):
         
         # We load the memory with data twice the size of our dcache.
         for i in range(self._word_size * self._block_size * self._sets * self._ways * 2):
-            # We generate random 8 byte numbers.
+            # We generate random 4 byte numbers.
             asm_data += "\t.word 0x{0:08x}\n".format(random.randrange(16**8))
         
         asm_main = "\tfence\n\tli t0, 69\n\tli t1, {0}\n\tli t5, {1}\n\tli t6, {2}\n\tla t2, rvtest_data\n\tli a1, {3}\n".format(self._sets, self._ways, self._word_size * self._block_size, self._sets * self._word_size * self._block_size)
